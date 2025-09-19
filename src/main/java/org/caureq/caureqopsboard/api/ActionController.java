@@ -1,4 +1,4 @@
-package org.caureq.caureqopsboard.api.dto;
+package org.caureq.caureqopsboard.api;
 
 import lombok.RequiredArgsConstructor;
 import org.caureq.caureqopsboard.service.ActionService;

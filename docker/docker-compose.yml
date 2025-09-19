@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: opsdb
+      POSTGRES_USER: ops
+      POSTGRES_PASSWORD: ops
+    ports:
+      - "5433:5432"   # hostPort:containerPort → host=5433, container=5432
+    volumes:
+      - opsdb:/var/lib/postgresql/data
+
+volumes:
+  opsdb:
