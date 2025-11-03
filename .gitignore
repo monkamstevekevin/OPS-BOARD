@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Frontend (Angular)
+frontend-angular/node_modules/
+frontend-angular/.angular/
+frontend-angular/dist/
+
+# Logs and temp
+*.log
+patch.diff
+Agent/*.log
+
+# OS files
+Thumbs.db
+.DS_Store
