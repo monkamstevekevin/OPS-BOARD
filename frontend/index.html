@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CAUREQ Ops Board - Frontend</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">CAUREQ Ops Board</div>
+      <nav class="nav">
+        <a href="#/assets">Assets</a>
+        <a href="#/admin">Admin</a>
+      </nav>
+      <button id="btnSettings" class="btn">⚙</button>
+    </header>
+
+    <main id="app"></main>
+
+    <div id="settings" class="drawer hidden">
+      <div class="drawer-content">
+        <h2>Paramètres</h2>
+        <label>API Base URL
+          <input type="text" id="cfgBaseUrl" placeholder="http://localhost:8060" />
+        </label>
+        <label>X-API-KEY
+          <input type="password" id="cfgApiKey" placeholder="optional" />
+        </label>
+        <label>X-ADMIN-API-KEY
+          <input type="password" id="cfgAdminKey" placeholder="optional" />
+        </label>
+        <div class="drawer-actions">
+          <button id="btnSaveCfg" class="btn primary">Enregistrer</button>
+          <button id="btnCloseCfg" class="btn">Fermer</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+  </html>
+

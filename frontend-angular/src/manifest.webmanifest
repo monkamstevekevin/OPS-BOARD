@@ -1,0 +1,11 @@
+{
+  "name": "CAUREQ Ops Board",
+  "short_name": "OpsBoard",
+  "theme_color": "#0b1320",
+  "background_color": "#0b1320",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": []
+}
+

@@ -16,7 +16,7 @@ public class ApiKeyAdminFilter implements Filter {
     private final List<String> cidrs;
 
     private final List<String> protectedPrefixes = List.of(
-            "/api/admin/vm/", "/api/admin/exec/"
+            "/api/admin/vm/", "/api/admin/exec/", "/api/admin/discovery/", "/api/admin/alerts/", "/api/admin/assets/", "/api/admin/diag/"
     );
 
     public ApiKeyAdminFilter(org.springframework.core.env.Environment env) {
@@ -30,6 +30,9 @@ public class ApiKeyAdminFilter implements Filter {
             throws IOException, ServletException {
         var r = (HttpServletRequest) req;
         var w = (HttpServletResponse) res;
+
+        // Let CORS preflight pass
+        if ("OPTIONS".equalsIgnoreCase(r.getMethod())) { chain.doFilter(req, res); return; }
 
         var path = r.getRequestURI();
         boolean adminRoute = protectedPrefixes.stream().anyMatch(path::startsWith);

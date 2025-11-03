@@ -1,0 +1,75 @@
+*** Begin Patch
+*** Update File: frontend-angular/src/app/components/asset-detail.component.ts
+@@
+-  imports: [CommonModule, RouterLink, FormsModule],
+-  template: `
+-    <a routerLink="/assets">??? retour</a>
++  imports: [CommonModule, RouterLink, FormsModule],
++  template: `
++    <a routerLink="/assets">? retour</a>
+@@
+-      <div class="row" *ngIf="live && live.topPid">
+-        <div class="col"><label>Top Process</label><div>PID {{live.topPid}} ? {{live.topName}} ? CPU {{live.topCpu | number:'1.0-0'}}% <span *ngIf="live.topMem">? MEM {{live.topMem | number:'1.0-1'}}%</span></div></div>
++      <div class="row" *ngIf="live && live.topPid">
++        <div class="col"><label>Top Process</label><div>PID {{live.topPid}} · {{live.topName}} · CPU {{live.topCpu | number:'1.0-0'}}% <span *ngIf="live.topMem">· MEM {{live.topMem | number:'1.0-1'}}%</span></div></div>
+       </div>
+@@
+-      <h3>?%diter</h3>
++      <h3>Éditer</h3>
+@@
+-        <div class="col"><label>Tags (s?par?s par des virgules)</label><input [(ngModel)]="editTags" placeholder="tag1, tag2"/></div>
++        <div class="col"><label>Tags (séparés par des virgules)</label><input [(ngModel)]="editTags" placeholder="tag1, tag2"/></div>
+@@
+-      <h3>Admin ? Node/VMID</h3>
++      <h3>Admin · Node/VMID</h3>
+@@
+-    <div class="card" *ngIf="metrics().length">
++    <div class="card" *ngIf="metrics().length">
+       <h3>Metrics (latest) <span class="help" data-tip="CPU = used % of total VM capacity (all vCPUs)
+ RAM/Disk = used %">i</span></h3>
+       <div class="row">
+-        <div class="col"><label>P?riode</label>
++        <div class="col"><label>Période</label>
+           <div class="row">
+             <div class="col"><input type="datetime-local" [(ngModel)]="fromLocal"></div>
+             <div class="col"><input type="datetime-local" [(ngModel)]="toLocal"></div>
+             <div class="col"><button class="btn" (click)="loadRange()">Charger</button></div>
+           </div>
+@@
+-    </div>
++    </div>
++
++    <div class="card" *ngIf="fsList.length">
++      <h3>Disks</h3>
++      <table class="assets-table">
++        <thead><tr><th>Mount</th><th>Used %</th></tr></thead>
++        <tbody>
++          <tr *ngFor="let f of fsList">
++            <td>{{f.mount}}</td>
++            <td>{{f.usedPct==null? '—' : (f.usedPct | number:'1.0-1')+'%'}}
++            </td>
++          </tr>
++        </tbody>
++      </table>
++    </div>
+@@
+ export class AssetDetailComponent {
+@@
+   summary: { cpuAvg?: number; cpuMax?: number; ramAvg?: number; ramMax?: number; diskAvg?: number; diskMax?: number; } | null = null;
+   metricsTimer: any;
+   alertsAll: any[] = [];
+   alertsTimer: any;
+   diag: any = null; diagError: string | null = null;
++  fsList: { mount: string, usedPct: number|null }[] = [];
+@@
+   private refreshLatestMetrics(){
+     // If user selected a custom range, do not override
+     if (this.fromLocal || this.toLocal) return;
+     this.api.latestMetrics(this.hostname, 50).subscribe({
+-      next: m => { this.metrics.set(m); setTimeout(()=>this.drawCharts(), 0); },
++      next: m => { this.metrics.set(m); setTimeout(()=>this.drawCharts(), 0); },
+       error: _ => {}
+     });
++    this.api.fsUsage(this.hostname).subscribe({ next: l => this.fsList = l as any, error: _ => {} });
+   }
+*** End Patch

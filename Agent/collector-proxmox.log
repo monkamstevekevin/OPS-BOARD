@@ -1,0 +1,84 @@
+[2025-10-27 15:39:37] START Proxmox collector
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes -> HTTP 200
+[2025-10-27 15:39:38] Node=Caureqlab status=online
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu -> HTTP 200
+[2025-10-27 15:39:38] QEMU count=21
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/802/status/current -> HTTP 200
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/802/agent/ping -> HTTP 501
+[2025-10-27 15:39:38] GA ping failed vmid=802: HTTP 501
+[2025-10-27 15:39:38] QEMU vm-802-Centralepve-02 state=running ip=null cpu=0 ram=40,3 disk=0
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/810/status/current -> HTTP 200
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/810/agent/ping -> HTTP 501
+[2025-10-27 15:39:38] GA ping failed vmid=810: HTTP 501
+[2025-10-27 15:39:38] QEMU vm-810-Centralepve-10 state=running ip=null cpu=0 ram=18,4 disk=0
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/804/status/current -> HTTP 200
+[2025-10-27 15:39:38] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/804/agent/ping -> HTTP 501
+[2025-10-27 15:39:38] GA ping failed vmid=804: HTTP 501
+[2025-10-27 15:39:38] QEMU vm-804-Centralepve-04 state=running ip=null cpu=0 ram=30,2 disk=0
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/808/status/current -> HTTP 200
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/808/agent/ping -> HTTP 501
+[2025-10-27 15:39:39] GA ping failed vmid=808: HTTP 501
+[2025-10-27 15:39:39] QEMU vm-808-Centralepve-08 state=running ip=null cpu=0 ram=15,7 disk=0
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/201/status/current -> HTTP 200
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/201/agent/ping -> HTTP 501
+[2025-10-27 15:39:39] GA ping failed vmid=201: HTTP 501
+[2025-10-27 15:39:39] QEMU vm-201-winserver2025 state=running ip=null cpu=0 ram=17,7 disk=0
+[2025-10-27 15:39:39] QEMU vm-100-Win11-Base state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:39] QEMU vm-206-labo-zfs state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/805/status/current -> HTTP 200
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/805/agent/ping -> HTTP 501
+[2025-10-27 15:39:39] GA ping failed vmid=805: HTTP 501
+[2025-10-27 15:39:39] INGEST error: {"timestamp":"2025-10-27T19:39:39.747876900Z","code":"BAD_REQUEST","message":"Validation error","correlationId":null,"details":{"fieldErrors":[{"objectName":"ingestDTO","field":"cpu","rejectedValue":101.4,"codes":["DecimalMax.ingestDTO.cpu","DecimalMax.cpu","DecimalMax.double","DecimalMax"],"arguments":[{"codes":["ingestDTO.cpu","cpu"],"arguments":null,"defaultMessage":"cpu","code":"cpu"},true,{"arguments":null,"codes":["100.0"],"defaultMessage":"100.0"}],"defaultMessage":"doit être inférieur ou égal à 100.0","bindingFailure":false,"code":"DecimalMax"}]}}
+[2025-10-27 15:39:39] INGEST payload: {
+    "hostname":  "vm-805-Centralepve-05",
+    "ip":  "0.0.0.0",
+    "os":  "Proxmox-VM",
+    "cpu":  101.4,
+    "ram":  48.8,
+    "disk":  0,
+    "services":  {
+                     "qemu-ga":  "down"
+                 }
+}
+[2025-10-27 15:39:39] QEMU vm-805-Centralepve-05 state=running ip=null cpu=101,4 ram=48,8 disk=0
+[2025-10-27 15:39:39] QEMU vm-102-Lab-DNS state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:39] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/803/status/current -> HTTP 200
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/803/agent/ping -> HTTP 501
+[2025-10-27 15:39:40] GA ping failed vmid=803: HTTP 501
+[2025-10-27 15:39:40] QEMU vm-803-Centralepve-03 state=running ip=null cpu=0 ram=17,8 disk=0
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/104/status/current -> HTTP 200
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/104/agent/ping -> HTTP 501
+[2025-10-27 15:39:40] GA ping failed vmid=104: HTTP 501
+[2025-10-27 15:39:40] QEMU vm-104-Twingate state=running ip=null cpu=0 ram=7,1 disk=0
+[2025-10-27 15:39:40] QEMU vm-203-zorrin state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/806/status/current -> HTTP 200
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/806/agent/ping -> HTTP 501
+[2025-10-27 15:39:40] GA ping failed vmid=806: HTTP 501
+[2025-10-27 15:39:40] QEMU vm-806-Centralepve-06 state=running ip=null cpu=0 ram=14,2 disk=0
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/811/status/current -> HTTP 200
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/811/agent/ping -> HTTP 501
+[2025-10-27 15:39:40] GA ping failed vmid=811: HTTP 501
+[2025-10-27 15:39:40] QEMU vm-811-Centralepve-11 state=running ip=null cpu=0 ram=16,7 disk=0
+[2025-10-27 15:39:40] QEMU vm-107-wqetwqert state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:40] QEMU vm-204-testvlan22 state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/801/status/current -> HTTP 200
+[2025-10-27 15:39:40] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/801/agent/ping -> HTTP 501
+[2025-10-27 15:39:40] GA ping failed vmid=801: HTTP 501
+[2025-10-27 15:39:41] QEMU vm-801-Centralepve-01 state=running ip=null cpu=0 ram=17,3 disk=0
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/809/status/current -> HTTP 200
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/809/agent/ping -> HTTP 501
+[2025-10-27 15:39:41] GA ping failed vmid=809: HTTP 501
+[2025-10-27 15:39:41] QEMU vm-809-Centralepve-09 state=running ip=null cpu=8,9 ram=18,1 disk=0
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/807/status/current -> HTTP 200
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/qemu/807/agent/ping -> HTTP 501
+[2025-10-27 15:39:41] GA ping failed vmid=807: HTTP 501
+[2025-10-27 15:39:41] QEMU vm-807-Centralepve-07 state=running ip=null cpu=0 ram=22,4 disk=0
+[2025-10-27 15:39:41] QEMU vm-202-windows11machine state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:41] QEMU vm-106-TmplCentrale state=stopped ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/lxc -> HTTP 200
+[2025-10-27 15:39:41] LXC  count=2
+[2025-10-27 15:39:41] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/lxc/101/status/current -> HTTP 200
+[2025-10-27 15:39:41] LXC  ct-101-CA1 ip=null cpu=0 ram=0 disk=0
+[2025-10-27 15:39:42] GET https://192.168.1.86:8006/api2/json/nodes/Caureqlab/lxc/103/status/current -> HTTP 200
+[2025-10-27 15:39:42] LXC  ct-103-DNStest ip=null cpu=0 ram=67,8 disk=14,9
+[2025-10-27 15:39:42] DONE

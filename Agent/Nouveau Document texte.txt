@@ -1,0 +1,70 @@
+# ==== CAUREQ Ops Board – Agent Windows (v1, PS 5.1 compatible) ====
+param(
+  [string]$ApiUrl = "http://localhost:8060/api/ingest",
+  [string]$ApiKey = "CHANGEMOI123",
+  [string]$Log    = "C:\OpsBoard\Agent\agent.log"
+)
+
+function Write-Log($msg) {
+  $stamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+  $dir = Split-Path $Log
+  if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+  Add-Content -Path $Log -Value "[$stamp] $msg"
+}
+
+try {
+  # Collecte de base
+  $HOST = $env:COMPUTERNAME
+
+  $IP = (Get-NetIPAddress -AddressFamily IPv4 |
+         Where-Object { $_.IPAddress -notlike "169.*" -and $_.PrefixOrigin -ne "WellKnown" } |
+         Select-Object -First 1 -ExpandProperty IPAddress)
+
+  $OS = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName
+
+  # CPU %
+  $CPU = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average
+
+  # RAM %
+  $Mem = Get-CimInstance Win32_OperatingSystem
+  $RAM = [math]::Round( ( ($Mem.TotalVisibleMemorySize - $Mem.FreePhysicalMemory) / $Mem.TotalVisibleMemorySize ) * 100, 1 )
+
+  # Disk % (lecteur C:)
+  $drv = Get-PSDrive -PSProvider FileSystem | Where-Object { $_.Name -eq 'C' }
+  if ($drv) {
+    $Disk = [math]::Round( ($drv.Used / ($drv.Used + $drv.Free)) * 100, 1 )
+  } else {
+    $Disk = 0
+  }
+
+  # Services (sans opérateur ternaire)
+  $spooler = Get-Service -Name Spooler -ErrorAction SilentlyContinue
+  if ($spooler -and $spooler.Status -eq 'Running') {
+    $svcState = 'up'
+  } else {
+    $svcState = 'down'
+  }
+  $services = @{ "Spooler" = $svcState }
+
+  # Payload JSON
+  $body = @{
+    hostname = $HOST
+    ip       = $IP
+    os       = $OS
+    cpu      = $CPU
+    ram      = $RAM
+    disk     = $Disk
+    services = $services
+  } | ConvertTo-Json -Depth 5
+
+  # Envoi
+  Invoke-RestMethod -Method Post -Uri $ApiUrl `
+    -Headers @{ "X-API-KEY" = $ApiKey } `
+    -ContentType "application/json" -Body $body | Out-Null
+
+  Write-Log "OK host=$HOST cpu=$CPU ram=$RAM disk=$Disk"
+}
+catch {
+  Write-Log "ERROR: $($_.Exception.Message)"
+  exit 1
+}

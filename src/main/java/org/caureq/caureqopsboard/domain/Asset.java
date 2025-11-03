@@ -29,5 +29,11 @@ public class Asset {
     @Column(length = 256)
     private String tags; // CSV simple v1
 
+    // Optionnel: mapping VM pour Proxmox (v1: non requis mais utile)
+    @Column(length = 64)
+    private String node;   // nom du node proxmox
+
+    private Integer vmid;  // vm id proxmox
+
     private Instant lastSeen;
 }

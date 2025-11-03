@@ -210,6 +210,17 @@ public class ProxmoxClient {
         return handle(spec, JsonNode.class).map(j -> j.path("data")).block();
     }
 
+    /* --------------------- VM status --------------------- */
+
+    public JsonNode vmCurrentStatus(String node, int vmid) {
+        var url = "%s/nodes/%s/qemu/%d/status/current".formatted(props.baseUrl(), node, vmid);
+        var spec = proxmoxWebClient.get().uri(url)
+                .header("Authorization", authHeader())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve();
+        return handle(spec, JsonNode.class).map(j -> j.path("data")).block();
+    }
+
     /* --------------------- utils --------------------- */
 
     public ProxmoxProps props() { return this.props; }
@@ -220,5 +231,14 @@ public class ProxmoxClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve();
         return handle(spec, JsonNode.class).map(j -> j.path("data").asText()).block();
+    }
+
+    /** Simple GET returning raw JSON (utility for discovery). */
+    public JsonNode simpleGetJson(String url) {
+        var spec = proxmoxWebClient.get().uri(url)
+                .header("Authorization", authHeader())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve();
+        return handle(spec, JsonNode.class).block();
     }
 }

@@ -39,4 +39,29 @@ public class MetricController {
     ) {
         return metricQueryService.summary(hostname, from, to);
     }
+
+    @GetMapping("/fs")
+    public java.util.List<java.util.Map<String,Object>> fs(@PathVariable String hostname) {
+        var map = metricQueryService.latestServices(hostname);
+        java.util.List<java.util.Map<String,Object>> list = new java.util.ArrayList<>();
+        for (var e : map.entrySet()) {
+            if (e.getKey().startsWith("fs:")) {
+                String mp = e.getKey().substring(3);
+                Double pct = null;
+                try { pct = Double.parseDouble(e.getValue()); } catch (Exception ignored) {}
+                java.util.Map<String,Object> item = new java.util.HashMap<>();
+                item.put("mount", mp);
+                item.put("usedPct", pct);
+                list.add(item);
+            }
+        }
+        // sort: root/C: first, then others alpha
+        list.sort((a,b)->{
+            String ma=(String)a.get("mount"), mb=(String)b.get("mount");
+            if ("/".equals(ma) || "C:\\".equals(ma)) return -1;
+            if ("/".equals(mb) || "C:\\".equals(mb)) return 1;
+            return ma.compareToIgnoreCase(mb);
+        });
+        return list;
+    }
 }

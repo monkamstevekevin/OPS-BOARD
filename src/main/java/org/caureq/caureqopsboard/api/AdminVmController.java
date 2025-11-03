@@ -23,6 +23,7 @@ public class AdminVmController {
     private final ProxmoxClient proxmox;
     private final ActionService actions;
     private final AuditService audit;
+    private final org.caureq.caureqopsboard.service.BulkActionService bulk;
 
     @PostMapping("/vm/{node}/{vmid}/start")
     public ResponseEntity<Map<String, String>> start(HttpServletRequest req,
@@ -86,4 +87,31 @@ public class AdminVmController {
         return proxmox.agentNetworkGetInterfaces(node, vmid);
     }
 
+    // ---- Bulk operations ----
+    public record BulkReq(List<String> hostnames, String tag) {}
+
+    @PostMapping("/vm/bulk/start")
+    public List<org.caureq.caureqopsboard.service.BulkActionService.Result> bulkStart(
+            jakarta.servlet.http.HttpServletRequest req,
+            @RequestBody BulkReq body) {
+        return bulk.start(new org.caureq.caureqopsboard.service.BulkActionService.Request(body.hostnames, body.tag), req);
+    }
+    @PostMapping("/vm/bulk/shutdown")
+    public List<org.caureq.caureqopsboard.service.BulkActionService.Result> bulkShutdown(
+            jakarta.servlet.http.HttpServletRequest req,
+            @RequestBody BulkReq body) {
+        return bulk.shutdown(new org.caureq.caureqopsboard.service.BulkActionService.Request(body.hostnames, body.tag), req);
+    }
+    @PostMapping("/vm/bulk/stop")
+    public List<org.caureq.caureqopsboard.service.BulkActionService.Result> bulkStop(
+            jakarta.servlet.http.HttpServletRequest req,
+            @RequestBody BulkReq body) {
+        return bulk.stop(new org.caureq.caureqopsboard.service.BulkActionService.Request(body.hostnames, body.tag), req);
+    }
+    @PostMapping("/vm/bulk/reset")
+    public List<org.caureq.caureqopsboard.service.BulkActionService.Result> bulkReset(
+            jakarta.servlet.http.HttpServletRequest req,
+            @RequestBody BulkReq body) {
+        return bulk.reset(new org.caureq.caureqopsboard.service.BulkActionService.Request(body.hostnames, body.tag), req);
+    }
 }

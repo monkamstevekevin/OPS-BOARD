@@ -18,11 +18,34 @@ spring:
     serialization:
       write-dates-as-timestamps: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: caureq-ops-board
+
 app:
   api-key: ${INGEST_API_KEY:CHANGEMOI123}
   status:
     upMinutes: 5
     staleMinutes: 10
+  default-node: ${APP_DEFAULT_NODE:Caureqlab}   # set env APP_DEFAULT_NODE, e.g., pve01
+  # If true, scheduler marks assets as seen when VM is running
+  # to keep 'lastSeen' fresh even without ingest
+  # Enable only if desired, default is false
+  # touch-last-seen: true
+  # Capture top process (pid,name,cpu,mem) optionally during live refresh (via QGA). Disabled by default.
+  # capture-top: true
+  # capture-interval-ms: 120000
 proxmox:
   base-url: https://192.168.1.86:8006/api2/json
   token-id: root@pam!opsboard
