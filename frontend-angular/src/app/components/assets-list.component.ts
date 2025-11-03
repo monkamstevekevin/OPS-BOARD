@@ -1,3 +1,16 @@
+/**
+ * AssetsListComponent — fast list of assets with live overlay.
+ *
+ * How it works
+ * - Fetches DB-backed list via ApiService.listAssets (fast, paged potential).
+ * - Periodically overlays live VM state from ApiService.liveAll (every ~30s),
+ *   and re-applies filters without flickering (keeps old data while refreshing).
+ * - Provides per-row admin actions (confirm modal) and bulk execution.
+ *
+ * Why this design
+ * - Avoid per-row remote calls during listing (performance & resilience).
+ * - Use Signals for simple reactive UI state and cheap recompute of filters.
+ */
 import { Component, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

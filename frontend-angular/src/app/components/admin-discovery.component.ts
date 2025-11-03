@@ -1,3 +1,12 @@
+/**
+ * AdminDiscoveryComponent — reconcile DB assets with Proxmox inventory.
+ *
+ * How it works
+ * - Preview: calls backend to compute proposals (update mappings), unknown VMs,
+ *   and missing assets (node/vmid no longer present).
+ * - Apply: updates DB mappings.
+ * - Clear/Archive missing: clear node/vmid (and optionally tag 'retired').
+ */
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';

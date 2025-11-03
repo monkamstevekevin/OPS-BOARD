@@ -1,3 +1,13 @@
+/**
+ * ApiService — typed HTTP client for backend endpoints.
+ *
+ * Responsibilities
+ * - Centralize URL construction and types for all REST calls.
+ * - Respect Base URL from Settings; use relative /api when served via dev proxy.
+ *
+ * Patterns
+ * - Service-as-gateway for backend; components do not hardcode URLs.
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 

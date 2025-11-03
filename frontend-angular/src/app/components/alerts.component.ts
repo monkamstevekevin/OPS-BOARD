@@ -1,3 +1,8 @@
+/**
+ * AlertsComponent — display and manage alerts.
+ * - Shows editable thresholds (CPU/RAM/Disk) and persists via admin API.
+ * - Lists alerts with filters (host, ack) and allows acknowledgement.
+ */
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';

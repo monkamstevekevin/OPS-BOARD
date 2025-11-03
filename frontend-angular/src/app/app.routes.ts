@@ -1,3 +1,7 @@
+/**
+ * Application routes — maps URL paths to standalone components.
+ * Kept flat and predictable for simplicity.
+ */
 import { Routes } from '@angular/router';
 import { AssetsListComponent } from './components/assets-list.component';
 import { AssetDetailComponent } from './components/asset-detail.component';

@@ -1,3 +1,8 @@
+/**
+ * ToastService — minimal UI notifications using Signals.
+ * - show()/success()/error()/info() push toasts with TTL auto-dismiss.
+ * - AppComponent renders the current list.
+ */
 import { Injectable, signal } from '@angular/core';
 
 export type ToastType = 'success' | 'error' | 'info';
@@ -21,4 +26,3 @@ export class ToastService {
 
   dismiss(id: number){ this.toasts.update(arr => arr.filter(t => t.id !== id)); }
 }
-

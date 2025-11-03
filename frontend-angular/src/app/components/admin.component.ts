@@ -1,3 +1,11 @@
+/**
+ * AdminComponent — VM actions, bulk actions and QGA exec.
+ *
+ * How it works
+ * - Single-VM actions use node/vmid provided by user or auto-filled from live list.
+ * - Bulk actions run server-side over a set of hostnames or tag.
+ * - QGA Exec sends command, optional input and timeout to backend.
+ */
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

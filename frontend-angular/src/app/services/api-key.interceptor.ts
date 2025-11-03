@@ -1,3 +1,11 @@
+/**
+ * apiKeyInterceptor — injects API keys from Settings into outgoing requests.
+ *
+ * - Adds X-ADMIN-API-KEY for /api/admin/* requests.
+ * - Adds X-API-KEY for other /api/* requests when present.
+ *
+ * This keeps authorization concerns out of components/services.
+ */
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const apiKeyInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,4 +19,3 @@ export const apiKeyInterceptor: HttpInterceptorFn = (req, next) => {
   }
   return next(req.clone({ headers }));
 };
-
