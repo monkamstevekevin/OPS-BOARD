@@ -5,6 +5,9 @@ import org.caureq.caureqopsboard.service.alerts.AlertRegistry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Alerts read controller — list and filter alerts.
+ */
 @RestController
 @RequestMapping("/api/alerts")
 @RequiredArgsConstructor

@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * Admin diagnostics controller — surface quick "top N" process info for a host/VM.
+ * Uses QGA when available; can fallback to local diagnostic for configured hosts.
+ */
 @RestController
 @RequestMapping("/api/admin/diag")
 @RequiredArgsConstructor
@@ -23,4 +27,3 @@ public class AdminDiagController {
         return diag.diagnose(a, n);
     }
 }
-

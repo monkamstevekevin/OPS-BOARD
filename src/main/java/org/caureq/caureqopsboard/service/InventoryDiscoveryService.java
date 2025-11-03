@@ -16,6 +16,18 @@ import java.util.regex.Pattern;
  * Discovers VMs and proposes mapping (node/vmid) for existing assets.
  * Does not create or delete assets unless apply() is called with createMissing=true.
  */
+/**
+ * Discovery and reconciliation against Proxmox inventory.
+ *
+ * Responsibilities
+ * - Enumerate Proxmox VMs (cluster-wide preferred, per-node fallback; QEMU+LXC).
+ * - Propose DB mapping updates, list unknown VMs, and detect assets whose VM is missing.
+ * - Provide helpers to clear mappings and archive (retire) missing assets.
+ *
+ * Patterns
+ * - Anti-corruption layer / Adapter over Proxmox API via ProxmoxClient.
+ * - Reconciliation routine producing a diff-like preview, then an apply step.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,6 +42,9 @@ public class InventoryDiscoveryService {
 
     /**
      * List VMs from Proxmox and propose asset updates where node/vmid are missing or different.
+     */
+    /**
+     * Build a reconciliation preview: mapping proposals, unknown VMs, and missing assets.
      */
     public PreviewResult preview() {
         List<Proposal> proposals = new ArrayList<>();
@@ -145,7 +160,7 @@ public class InventoryDiscoveryService {
         return new PreviewResult(proposals, unknown, missing);
     }
 
-    /** Apply proposals to DB. */
+    /** Apply mapping proposals to DB (idempotent, only updates node/vmid). */
     public int apply(List<Proposal> list) {
         int updated = 0;
         for (var p : list) {
@@ -161,7 +176,7 @@ public class InventoryDiscoveryService {
         return updated;
     }
 
-    /** Clear node/vmid mapping for given hostnames. */
+    /** Clear node/vmid mapping for given hostnames (no deletion). */
     public int clearMappings(List<String> hostnames) {
         if (hostnames == null || hostnames.isEmpty()) return 0;
         int updated = 0;

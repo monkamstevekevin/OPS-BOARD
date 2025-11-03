@@ -14,6 +14,18 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
+/**
+ * Scheduler-backed live state cache for assets mapped to Proxmox.
+ *
+ * Responsibilities
+ * - Periodically poll Proxmox for VM power state, QGA reachability and IPv4.
+ * - Optionally capture top processes (throttled per host).
+ * - Expose an in-memory map consumed by StatusController and the UI.
+ *
+ * Patterns
+ * - Scheduler/Background worker (Spring @Scheduled).
+ * - Cache-aside: compute and keep a short-lived cache separate from DB.
+ */
 @Service
 @Slf4j
 public class LiveStatusService {
@@ -37,6 +49,7 @@ public class LiveStatusService {
     public List<LiveStatus> all() { return new ArrayList<>(cache.values()); }
     public Optional<LiveStatus> get(String hostname) { return Optional.ofNullable(cache.get(hostname)); }
 
+    /** Refresh the in-memory live cache for all assets. */
     @Scheduled(fixedDelayString = "${app.status.refresh-ms:30000}")
     public void refresh() {
         var assets = assetRepo.findAll();

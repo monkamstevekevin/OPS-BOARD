@@ -19,6 +19,17 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Proxmox HTTP client (Adapter/Facade over Proxmox REST API).
+ *
+ * Responsibilities
+ * - Encapsulate auth, base URLs and error handling for Proxmox calls.
+ * - Provide narrow methods used by services: VM actions, QGA, status/current, inventory.
+ *
+ * Patterns
+ * - Facade/Adapter: hides HTTP details from business services.
+ * - Retry/Timeout configured at WebClient level with simple backoff.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

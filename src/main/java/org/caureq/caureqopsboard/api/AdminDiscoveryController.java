@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /** Admin endpoints to preview/apply Proxmox VM to Asset mapping. */
+/**
+ * Admin endpoints to reconcile assets with Proxmox inventory.
+ *
+ * Pattern: Controller delegates to InventoryDiscoveryService (Controller -> Service).
+ */
 @RestController
 @RequestMapping("/api/admin/discovery")
 @RequiredArgsConstructor

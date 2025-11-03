@@ -8,6 +8,10 @@ import org.caureq.caureqopsboard.service.AssetCommandService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Asset write endpoints (owner/tags updates).
+ * Pattern: small command endpoints that delegate to AssetCommandService.
+ */
 @RestController
 @RequestMapping("/api/assets")
 @RequiredArgsConstructor

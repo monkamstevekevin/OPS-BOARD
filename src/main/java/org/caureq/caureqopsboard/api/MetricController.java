@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+/**
+ * Metrics read APIs for an asset: latest window, ranges and summaries.
+ */
 @RestController
 @RequestMapping("/api/assets/{hostname}/metrics")
 @RequiredArgsConstructor

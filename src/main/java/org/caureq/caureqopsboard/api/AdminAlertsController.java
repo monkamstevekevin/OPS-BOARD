@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /** Admin endpoints to view/update alert thresholds at runtime. */
+/**
+ * Admin alerts controller — manage runtime thresholds.
+ */
 @RestController
 @RequestMapping("/api/admin/alerts")
 @RequiredArgsConstructor
@@ -32,4 +35,3 @@ public class AdminAlertsController {
         return ResponseEntity.noContent().build();
     }
 }
-

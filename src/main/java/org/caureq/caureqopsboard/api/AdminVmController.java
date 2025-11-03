@@ -15,6 +15,11 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Admin VM actions controller.
+ *
+ * Pattern: Command-style endpoints (start/shutdown/stop/reset) delegating to service layer.
+ */
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor

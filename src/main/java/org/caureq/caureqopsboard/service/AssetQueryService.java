@@ -16,6 +16,18 @@ import java.util.List;
 import java.time.ZoneId;
 import java.util.regex.Pattern;
 
+/**
+ * Read side for Assets.
+ *
+ * Responsibilities
+ * - Query assets from the DB with optional search/pagination.
+ * - Compute coarse status (UP/STALE/DOWN) from lastSeen windows only.
+ * - Batch-load latest metrics for the current page to avoid N+1 queries.
+ *
+ * Patterns
+ * - Repository pattern via Spring Data JPA.
+ * - CQRS-inspired: reads avoid calling Proxmox; live state comes from LiveStatusService.
+ */
 @Service
 @RequiredArgsConstructor
 public class AssetQueryService {
@@ -24,6 +36,10 @@ public class AssetQueryService {
     private final AppProps props;
     private final ProxmoxClient proxmox;
 
+    /**
+     * Page through assets (DB-backed) and attach latest metrics when available.
+     * No Proxmox calls here: live VM state is handled elsewhere.
+     */
     public List<AssetListItemDTO> list(String q, Integer limit, Integer offset, boolean includeRetired){
         int size = (limit==null || limit<=0 || limit>1000) ? 200 : limit;
         int off = (offset==null || offset<0) ? 0 : offset;
@@ -68,6 +84,10 @@ public class AssetQueryService {
             );
         }).toList();
     }
+    /**
+     * Get a single asset details from DB (owner, tags, lastSeen...).
+     * Live VM state is expected to be fetched via LiveStatusService by the UI.
+     */
     public AssetDetailDTO get(String hostname){
         var a = assetRepo.findByHostnameIgnoreCase(hostname)
                 .orElseThrow(() -> new IllegalArgumentException("asset not found: " + hostname));
